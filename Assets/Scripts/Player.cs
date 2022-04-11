@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _highScoreText.text = PlayerPrefs.GetString("HighScore").ToString();
-        _livesLeftText = _maxLives.ToString();
+        _livesLeftText.text = _maxLives.ToString();
 
         _audioSource = GetComponent<AudioSource>();
     }
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     public void GetHurt()
     {
         _maxLives--;
-        _livesLeftText = _maxLives.ToString();
+        _livesLeftText.text = _maxLives.ToString();
         if (_maxLives <= 0)
         {
             StartCoroutine(GameOver());
