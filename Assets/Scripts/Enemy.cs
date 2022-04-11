@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
 
     public void GetDestoyed()
     {
-        // Destroy(Instantiate(dieFX, transform.position, Quaternion.identity), destroyFXTime);
+        Destroy(Instantiate(dieFX, transform.position, Quaternion.identity), destroyFXTime);
         _player.EnemyKilled();
         print("Enemy Died");
         Destroy(gameObject);
