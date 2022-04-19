@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject _projectile;
     [SerializeField] GameObject _dieFX;
-    Player _player;
     float _projDestroyTime = 3f;
     float _minShootTime = 1f;
     float _maxShootTime = 60f;
@@ -22,7 +21,6 @@ public class Enemy : MonoBehaviour
     AudioSource _audioSource;
 
     private void Start() {
-        _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _coolDownTime = UnityEngine.Random.Range(_minShootTime, _maxShootTime);
     }
@@ -85,8 +83,8 @@ public class Enemy : MonoBehaviour
 
     public void GetDestoyed()
     {
-        // Destroy(Instantiate(dieFX, transform.position, Quaternion.identity), destroyFXTime);
-        _player.EnemyKilled();
+        Destroy(Instantiate(_dieFX, transform.position, Quaternion.identity), _destroyFXTime);
+        GameManager.EnemyKilled();
         print("Enemy Died");
         Destroy(gameObject);
     }
