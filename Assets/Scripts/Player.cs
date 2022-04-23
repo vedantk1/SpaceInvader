@@ -16,9 +16,14 @@ public class Player : MonoBehaviour
     float _gameOverDelay = 2f;
     float _fxDestroyTime = 2f;
     AudioSource _audioSource;
+    private void OnEnable() {
+        GameManager.onGameOver += _StartGameOverSeq;
+    }
+    private void OnDisable() {
+        GameManager.onGameOver -= _StartGameOverSeq;
+    }
     void Start()
     {
-        GameManager.onGameOver += _StartGameOverSeq;
         _audioSource = GetComponent<AudioSource>();
     }
     void Update()

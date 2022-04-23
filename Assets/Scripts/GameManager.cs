@@ -17,11 +17,18 @@ public class GameManager : MonoBehaviour
     }
     public static void EnemyKilled()
     {
-        onEnemyKilled();
+        if (onEnemyKilled != null)
+        {
+            onEnemyKilled();
+        }
     }
     public static void PlayerHurt()
     {
-        onPlayerHurt();
+        if (onPlayerHurt != null)
+        {
+            onPlayerHurt();
+        }
+        
     }
     public static int GetScore()
     {
@@ -31,26 +38,32 @@ public class GameManager : MonoBehaviour
     {
         return instance._maxLives;
     }
-    private void Start() {
+    private void OnEnable() {
         onEnemyKilled += _EnemyKilled;
         onPlayerHurt += _PlayerHurt;
         onGameOver += _SaveHS;
+        
+    }
+    private void OnDisable() {
+        onEnemyKilled -= _EnemyKilled;
+        onPlayerHurt -= _PlayerHurt;
+        onGameOver -= _SaveHS;        
     }
 
     private void _EnemyKilled()
     {
         _score++;
         _killsToWin--;
-        if (_killsToWin <= 0)
+        if (_killsToWin <= 0 && onGameOver != null)
         {
-            _SaveHS();
+            onGameOver();
         }
     }
     private void _PlayerHurt()
     {
         _maxLives--;
         
-        if (_maxLives <= 0)
+        if (_maxLives <= 0 && onGameOver != null)
         {
             onGameOver();
         }

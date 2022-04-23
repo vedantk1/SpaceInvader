@@ -5,16 +5,26 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
     [SerializeField] Text _scoreText;
     [SerializeField] Text _highScoreText;
     [SerializeField] Text _livesLeftText;
     int _score;
     int _lives;
     int _highScore;
-    
-    private void Start() {
+    private void Awake() {
+        instance = this;
+    }
+    private void OnEnable() {
         GameManager.onEnemyKilled += UpdateScore;
-        GameManager.onPlayerHurt += UpdateLives;
+        GameManager.onPlayerHurt += UpdateLives;        
+    }
+    private void OnDisable() {
+        GameManager.onEnemyKilled -= UpdateScore;
+        GameManager.onPlayerHurt -= UpdateLives;   
+        
+    }
+    private void Start() {
 
         UpdateHS();
         UpdateLives();
